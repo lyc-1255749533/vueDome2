@@ -1,0 +1,234 @@
+全局安装 vue-cli
+    $ cnpm install --global vue-cli  第一步
+
+
+    
+    # 创建一个基于 webpack 模板的新项目
+    $ vue init webpack my-project    第二步
+    # 这里需要进行一些配置，默认回车即可
+
+
+    ? Project name my-project 
+    项目描述
+    ? Author runoob <test@runoob.com>
+    项目作者
+    ? Vue build standalone
+    ? Use ESLint to lint your code? N   ＊＊＊＊＊＊＊＊＊
+    ? Pick an ESLint preset Standard
+    ? Setup unit tests with Karma + Mocha? Yes
+    ? Setup e2e tests with Nightwatch? Yes
+
+    vue-cli · Generated "my-project".
+
+    To get started:
+    
+        cd my-project
+        npm install
+        npm run dev
+
+
+    cnpm 安装指令 npm install -g cnpm --registry=https://registry.npm.taobao.org
+
+vue 介绍
+    1、渐进式框架
+        渐进式代表的含义是：主张最少。
+        每个框架都不可避免会有自己的一些特点，从而会对使用者有一定的要求，这些要求就是主张，主张有强有弱，它的强势程度会影响在业务开发中的使用方式。
+    2、mvvm模式
+        MVVM是Model-View-ViewModel的简写。即模型-视图-视图模型。
+        MVC:MVC是Model-View- Controller的简写。即模型-视图-控制器。
+    3、组件化
+    4、虚拟dom 
+
+
+
+虚拟DOM
+
+响应式原理和$set 
+
+
+vue指令：
+    v-if 
+    v-show 
+    v-for       
+    v-html 
+    v-model 
+    v-bind 
+    v-on 
+ 
+
+事件修饰符：
+    .stop 
+    .prevent   阻止默认事件，默认事件 有（。。。。）  
+    .capture 
+    .self 
+    .once 
+    .passive 
+    按键修饰符
+    .enter
+    .tab
+    .delete (捕获“删除”和“退格”键)
+    .esc
+    .space
+    .up
+    .down
+    .left
+    .right
+    鼠标按钮修饰符
+    .left
+    .right
+    .middle
+
+computed Vs 方法 Vs watch 对比
+
+computed:计算属性是基于它们的响应式依赖的值进行缓存的。只在相关响应式依赖的值发生改变时它们才会重新求值。 性能高，执行快。
+
+watch: 当需要在数据变化时执行[异步]或开销较大的操作时
+
+watch和computed 的区别
+watch和computed 能完成的效果是一样的，但是实现的方式不同。 
+（比如接收一个外卖，计算属性 就是外卖到了接电话，监听就是一直盯着窗户看他来没来）
+
+自定义指令：directives
+    全局注册  在mian.js中 使用Vue.directive注册，所有组件都可以使用这个指令
+
+    局部注册：在组件内部 使用directives 注册，只有该组件可以使用这个指令
+
+钩子函数：
+    bind：只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。
+
+    inserted：被绑定元素插入父节点时调用 (仅保证父节点存在，但不一定已被插入文档中)。
+
+    update：当绑定指令的元素 属性发生变化时调用
+
+    bind 有3个参数
+    1、el dom元素
+    2、binding  一个对象，包含以下属性
+        name 指令的名称
+        value 令的绑定值，例如：v-demo="2" 中，绑定值为 2
+        arg 传给指令的参数，可选。例如 v-demo:foo 中，参数为 "foo"
+
+父传子
+    父组件中调用子组件时 添加一个属性＝‘要传递的值’
+    在子组件中 通过props：［属性名］／｛属性名 type 设置接受的数据类型，default 设置默认值｝形式接收传递过来的数据  
+
+子传父
+    子组件中，使用this.$emit('自定义事件名',值)
+    在父组件中调用子组件时 给子组件添加一个 自定义事件 ＝ 处理函数 处理函数中的参数 就是子组件传递过来的值
+
+
+兄弟
+1、新建一个js文件， 我这里叫做 bus.js；
+文件内容：
+         import Vue from 'vue';  
+         export default new Vue();
+
+2、然后在你需要触发的 组件中引入   import   bus  from  '文件路径'
+        执行：bus.$emit('触发名称', 传输的数据 )
+        最后在你需要的通信的另一个组件中   mounted生命周期钩子中执行如下：
+            bus.$on('触发名称', res => {
+            //写你需要的方法
+        })
+
+slot 插槽
+    当组件中使用 slot标签，可以在使用组件的时候，传递一个标签元素，该元素会在 slot中显示。
+
+路由跳转传参 的两种方式及区别
+	1 、params:  this.$router.push({path:’/b’+参数})  this.$router.push({name:’b’，params:{id:2}})  router-link  :to=‘/b/+id’
+		a、需要在 路由配置参数  /b/:id  
+		b、url地址栏 显示的是 /b/2
+        2、query： this.$router.push({path:’/b’,query:{id:2}})
+		a、不需要在路由配置参数
+		b、url地址栏显示的是  ／b?id=2
+ 		
+路由钩子
+	组件内钩子
+		beforeRouteEnter 路由在进来之前
+		beforeRouteUpdate  路由更新指的是 路由参数发生变化  a/1  a/2
+		beforeRouteLeave  路由离开时掉用
+
+	全局钩子
+		beforeEach  每次路由跳转都掉用 该函数
+		afterEach   这些钩子不会接受 next 函数也不会改变导航本身
+
+	路由独享的守卫(钩子)   在路由配置上直接定义 beforeEnter 守卫
+
+生命周期 
+	beforCreate 创建之前  数据没有初始化  dom没有加载
+	created     创建完成  数据已经初始化  dom没有加载    数据初始化
+	mounted     挂在完成  数据已经初始化  dom加载	 axios请求
+	beforUpdate 数据更新前
+	updated     数据更新完成
+	activated   组件使用keep alive 缓存时  被激活
+	deactivated 组件使用keep alive 缓存时  被隐藏
+	beforeDestroy 组件销毁前   取消一些全局事件 比比如说定时器，滚动事件
+	destroyed     组件被销毁
+	errorCaptured 当捕获一个来自子孙组件的错误时被调用   为了代码更健壮
+		
+
+vuex 
+
+
+assets 和static 的区别
+相同点：
+assets和static两个都是存放静态资源文件。项目中所需要的资源文件图片，字体图标，样式文件等都可以放在这两个文件下，这是相同点 
+不相同点：
+assets中存放的静态资源文件在项目打包时，也就是运行npm run build时会将assets中放置的静态资源文件进行打包上传，所谓打包简单点可以理解为压缩体积，代码格式化。 
+static中放置的静态资源文件就不会要走打包压缩格式化等流程，而是直接进入打包好的目录。因为避免了压缩直接进行上传，在打包时会提高一定的效率，但是static中的资源文件由于没有进行压缩等操作，所以文件的体积也就相对于assets中打包后的文件提交较大点。	
+
+
+
+vue-cli 打包指令 npm run build 
+路径问题修改 config/index.js文件中的 assetsPublicPath: './' 路径
+
+vue－cli中如何 使用sass 
+1、安装依赖：
+npm install node-sass --save-dev
+npm install sass-loader --save-dev
+
+2、进入webpack.base.config.js 配置scss
+
+	{
+     		test: /\.scss$/,
+     		loaders: ["style", "css", "sass"]
+	}
+
+
+	
+
+v-clock 有什么作用
+避免页面闪烁，因为vue从后台读取的数据时或者是刷新页面的时候因为响应问题可能会闪现一下{{item.name}} 
+
+
+双向数据绑定原理
+1、当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty 把这些属性全部转为 getter/setter。
+2、这些 getter/setter 在属性被访问和修改时通知变更。
+3、每个组件实例都对应一个 watcher 实例，它会在组件渲染的过程中把“接触”过的数据属性记录为依赖。之后当依赖项的 setter 触发时，会通知 watcher，从而使它关联的组件重新渲染。
+
+
+vuex 
+    state :声明数据，所有组件 都共享这个数据
+    mutations：修改state数据 的方法，在组件中 使用this.$store.commit(‘方法名’) 来使用mutations 中的方法
+    actions:如果涉及到异步操作，那就通过 this.$store.dispatch（‘方法名’）来使用actions里面的 方法，
+            在actions 的方法中处理完成之后，在通过 context.commit（‘方法名’） 提交给mutations来修改数据
+    getters: 类似于计算属性 把state中的数据进行过滤处理
+    modules: 可以把vuex 划分成 很多个模块  modules：{模块1，模块2}
+          划分模块后 产生的问题 就是 getters  mutations actions  方法名会产生冲突
+          解决办法：命名空间   namespaced: true
+          调用方法时  this.$store.commit('模块名称/方法名称',321)
+
+
+    辅助函数 ...mapState([‘变量名’]]) 接收vuex中的state更方便
+            ...mapGetters({"接收时变量名":"vuex getters中的方法名"}) 接收vuex中的getters更方便
+    
+axios拦截分为两部分
+
+1、请求头拦截 
+    axios.interceptors.request  请求头拦截，在这里可以给请求头添加cookie或token
+2、请求体拦截
+    axios.interceptors.response  请求体拦截，在这里可以统一处理所有的接口返回值，或者接口请求超时处理   
+
+
+
+
+
+

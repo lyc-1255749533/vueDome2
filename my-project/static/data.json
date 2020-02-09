@@ -1,0 +1,14 @@
+[
+    {
+        "id":1,"img":"require(../assets/nuotai01.jpg)","p1":"诺泰暖宫护腰神奇","address":"￥536.00","info":"促销价：￥208.00"
+    },
+    {
+        "id":2,"img":"require(../assets/qixi01.jpg)","p1":"七喜柠檬味","address":"原价：￥48.90","info":"促销价：43.90"
+    },
+    {
+        "id":3,"img":"require(../assets/bama01.jpg)","p1":"八马茶业","address":"原价：￥800.00","info":"促销价：￥600.00"
+    },
+    {
+        "id":4,"img":"require(../assets/lee01.jpg)","p1":"lee男装","address":"原价：￥350.00","info":"促销价：￥293.00"
+    }
+]
